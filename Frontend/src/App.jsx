@@ -34,7 +34,7 @@ const App = () => {
       </form>
 
       <div className="p-4 m-4 border rounded">
-        <h1 className="mb-4 uppercase text-center">Player Card</h1>
+        <h1 className="mb-4 uppercase text-center text-xl">User Card</h1>
 
         <div className="flex flex-wrap justify-evenly gap-4">
           <ul className="userCard">
