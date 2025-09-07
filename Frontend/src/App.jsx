@@ -27,6 +27,14 @@ const App = () => {
           </option>
         </select>
       </form>
+
+      <ul>
+        <li>UID</li>
+        <li>First Name</li>
+        <li>Last Name</li>
+        <li>Email</li>
+        <li>Gender</li>
+      </ul>
     </>
   );
 };
