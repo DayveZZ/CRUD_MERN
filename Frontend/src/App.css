@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.gender {
+  @apply bg-black/70;
+}
