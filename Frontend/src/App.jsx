@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 
 const App = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+
   return (
     <>
       <h1 className="text-center text-xl p-8 uppercase">
         User Management MERN App
       </h1>
-      <form>
+      <form className="input flex justify-between m-4 border rounded px-4 py-2">
         <input type="text" placeholder="First Name" required />
-        <input type="text" placeholder="Last Name" />
+        <input type="text" placeholder="Last Name (optional)" />
         <input type="text" placeholder="Email" required />
 
-        <select class="rounded-md px-3 py-2 border-none outline-none focus:ring-0">
+        <select class="outline-0">
           <option value="Select Gender" class="gender uppercase">
             Select Gender
           </option>
@@ -26,15 +30,25 @@ const App = () => {
             Other
           </option>
         </select>
+        <button className="cursor-pointer hover:text-white/50">Submit</button>
       </form>
 
-      <ul>
-        <li>UID</li>
-        <li>First Name</li>
-        <li>Last Name</li>
-        <li>Email</li>
-        <li>Gender</li>
-      </ul>
+      <div className="p-4 m-4 border rounded">
+        <h1 className="mb-4 uppercase text-center">Player Card</h1>
+
+        <div className="flex flex-wrap justify-evenly gap-4">
+          <ul className="userCard">
+            <li>UID: ###</li>
+            <li>Name: First Last</li>
+            <li>Email: a@a.com</li>
+            <li>Gender: Male</li>
+            <li className="flex justify-evenly">
+              <button>Delete</button>
+              <button>Edit</button>
+            </li>
+          </ul>
+        </div>
+      </div>
     </>
   );
 };
