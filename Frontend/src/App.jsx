@@ -57,77 +57,15 @@ const App = () => {
 
       <div className="p-4 m-4 border rounded">
         <h1 className="mb-4 uppercase text-center text-xl">User Card</h1>
-        {/* <div className="flex flex-wrap justify-between gap-4"> */}
         <div className="grid grid-cols-4 gap-4">
           <ul className="userCard">
-            <li>UID: ###</li>
+            {/* <li>UID: ###</li> */}
             <li>Name: First Last</li>
             <li>Email: a@a.com</li>
             <li>Gender: Male</li>
             <li className="flex justify-evenly">
               <button>Delete</button>
-              <button>Edit</button>
-            </li>
-          </ul>
-
-          <ul className="userCard">
-            <li>UID: ###</li>
-            <li>Name: First Last</li>
-            <li>Email: a@a.com</li>
-            <li>Gender: Male</li>
-            <li className="flex justify-evenly">
-              <button>Delete</button>
-              <button>Edit</button>
-            </li>
-          </ul>
-          <ul className="userCard">
-            <li>UID: ###</li>
-            <li>Name: First Last</li>
-            <li>Email: a@a.com</li>
-            <li>Gender: Male</li>
-            <li className="flex justify-evenly">
-              <button>Delete</button>
-              <button>Edit</button>
-            </li>
-          </ul>
-          <ul className="userCard">
-            <li>UID: ###</li>
-            <li>Name: First Last</li>
-            <li>Email: a@a.com</li>
-            <li>Gender: Male</li>
-            <li className="flex justify-evenly">
-              <button>Delete</button>
-              <button>Edit</button>
-            </li>
-          </ul>
-          <ul className="userCard">
-            <li>UID: ###</li>
-            <li>Name: First Last</li>
-            <li>Email: a@a.com</li>
-            <li>Gender: Male</li>
-            <li className="flex justify-evenly">
-              <button>Delete</button>
-              <button>Edit</button>
-            </li>
-          </ul>
-          <ul className="userCard">
-            <li>UID: ###</li>
-            <li>Name: First Last</li>
-            <li>Email: a@a.com</li>
-            <li>Gender: Male</li>
-            <li className="flex justify-evenly">
-              <button>Delete</button>
-              <button>Edit</button>
-            </li>
-          </ul>
-          <ul className="userCard">
-            <li>UID: ###</li>
-            <li>Name: First Last</li>
-            <li>Email: a@a.com</li>
-            <li>Gender: Male</li>
-            <li className="flex justify-evenly">
-              <button>Delete</button>
-              <button>Edit</button>
+              {/* <button>Edit</button> */}
             </li>
           </ul>
         </div>
