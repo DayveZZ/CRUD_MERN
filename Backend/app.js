@@ -3,16 +3,20 @@ const cors = require("cors");
 const app = new express();
 const users = require("./MOCK_DATA.json");
 
+app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 const basePath = "/api/users";
+
 app
   .route(basePath)
   .get(async (req, res) => {
     return res.send(users);
   })
   .post((req, res) => {
-    return res.send("Upload Successfully !!!");
+    console.log(req.body);
+
+    return res.json({ status: "Upload Successfully !!!" });
   });
 
 app
@@ -23,10 +27,10 @@ app
     return res.json(user);
   })
   .patch((req, res) => {
-    return res.send("Updated Successfully !!!");
+    return res.send({ status: "Updated Successfully !!!" });
   })
   .delete((req, res) => {
-    return res.send("Deleted Successfully !!!");
+    return res.send({ status: "Deleted Successfully !!!" });
   });
 
 app.listen(8000);
