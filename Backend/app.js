@@ -38,21 +38,21 @@ app.use(cors());
 const basePath = "/users";
 app
   .route(basePath)
-  .get(async (res, req) => {
+  .get(async (req, res) => {
     const allUsers = await UserModel.find();
     return res.send(allUsers);
   })
-  .post((res, req) => {
+  .post((req, res) => {
     return res.send();
   });
 
 app
   .route(`${basePath}/:id`)
-  .get((res, req) => {
-    return res.send();
+  .get((req, res) => {
+    return res.send("Fetch from Frontend");
   })
-  .post((res, req) => {
-    return res.send();
+  .post((req, res) => {
+    return res.send("Uploaded to backend");
   });
 
-app.listen(8000);
+app.listen(5000);
