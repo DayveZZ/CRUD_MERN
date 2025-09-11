@@ -1,11 +1,25 @@
 import React, { useState } from "react";
 import "./App.css";
 import toast, { Toaster } from "react-hot-toast";
+import { useEffect } from "react";
 
 const App = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+  const [users, setUsers] = useState([]);
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
+  // const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/users")
+      .then((data) => {
+        return data.json();
+      })
+      .then((data) => {
+        // console.log(data);
+        setUsers(data);
+      })
+      .catch((err) => console.error("Fetch error:", err));
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,6 +32,17 @@ const App = () => {
       },
     });
   };
+
+  function getDetails(id) {
+    fetch(`http://localhost:8000/api/users/${id}`)
+      .then((data) => {
+        return data.json();
+      })
+      .then((data) => {
+        // setUsers(data);
+        console.log(data);
+      });
+  }
 
   return (
     <>
@@ -33,17 +58,17 @@ const App = () => {
           <input type="text" placeholder="Last Name (optional)" />
           <input type="text" placeholder="Email" required />
 
-          <select class="outline-0 cursor-pointer">
-            <option value="Select Gender" class="gender">
+          <select className="outline-0 cursor-pointer">
+            <option value="Select Gender" className="gender">
               Select Gender
             </option>
-            <option value="Male" class="gender">
+            <option value="Male" className="gender">
               Male
             </option>
-            <option value="Female" class="gender">
+            <option value="Female" className="gender">
               Female
             </option>
-            <option value="Other" class="gender">
+            <option value="Other" className="gender">
               Other
             </option>
           </select>
@@ -58,16 +83,28 @@ const App = () => {
       <div className="p-4 m-4 border rounded">
         <h1 className="mb-4 uppercase text-center text-xl">User Card</h1>
         <div className="grid grid-cols-4 gap-4">
-          <ul className="userCard">
-            {/* <li>UID: ###</li> */}
-            <li>Name: First Last</li>
-            <li>Email: a@a.com</li>
-            <li>Gender: Male</li>
-            <li className="flex justify-evenly">
-              <button>Delete</button>
-              {/* <button>Edit</button> */}
-            </li>
-          </ul>
+          {users?.map((ele) => {
+            return (
+              <ul className="userCard" key={ele.id}>
+                <li>UID: {ele.id}</li>
+                <li>
+                  Name: {ele.first_name} {ele.last_name}
+                </li>
+                <li>Email: {ele.email}</li>
+                <li>Gender: {ele.gender}</li>
+                <li className="flex justify-evenly">
+                  <button>Delete</button>
+                  <button
+                    onClick={() => {
+                      getDetails(ele.id);
+                    }}
+                  >
+                    getDetails
+                  </button>
+                </li>
+              </ul>
+            );
+          })}
         </div>
       </div>
     </>

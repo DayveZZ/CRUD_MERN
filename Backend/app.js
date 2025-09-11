@@ -1,46 +1,15 @@
 const express = require("express");
 const cors = require("cors");
 const app = new express();
-const mongoose = require("mongoose");
-
-// mongoose
-//   .connect("mongodb://127.0.0.1:27017/MERN1stDB")
-//   .then(() => {
-//     console.log("DB Connected");
-//   })
-//   .catch((err) => {
-//     console.log("error===>", err);
-//   });
-
-// const userSchema = new mongoose.Schema({
-//   first_name: {
-//     type: String,
-//     required: true,
-//   },
-//   last_name: {
-//     type: String,
-//   },
-//   email: {
-//     type: String,
-//     required: true,
-//     unique: true,
-//   },
-//   gender: {
-//     type: String,
-//     required: true,
-//   },
-// });
-
-// const UserModel = mongoose.model("user", userSchema);
+const users = require("./MOCK_DATA.json");
 
 app.use(cors());
 
-const basePath = "/users";
+const basePath = "/api/users";
 app
   .route(basePath)
   .get(async (req, res) => {
-    const allUsers = await UserModel.find();
-    return res.send("Fetched Success !!!");
+    return res.send(users);
   })
   .post((req, res) => {
     return res.send("Upload Successfully !!!");
@@ -49,7 +18,9 @@ app
 app
   .route(`${basePath}/:id`)
   .get((req, res) => {
-    return res.send("Fetched Successfully !!!");
+    const id = req.params.id;
+    const user = users.find((user) => user.id == id);
+    return res.json(user);
   })
   .patch((req, res) => {
     return res.send("Updated Successfully !!!");
@@ -58,4 +29,4 @@ app
     return res.send("Deleted Successfully !!!");
   });
 
-app.listen(5000);
+app.listen(8000);
