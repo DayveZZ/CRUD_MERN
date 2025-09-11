@@ -43,16 +43,16 @@ app
     return res.send(allUsers);
   })
   .post((req, res) => {
-    return res.send();
+    return res.send("Uploaded to backend");
   });
 
 app
   .route(`${basePath}/:id`)
-  .get((req, res) => {
-    return res.send("Fetch from Frontend");
+  .patch((req, res) => {
+    return res.send("Updated successfully");
   })
-  .post((req, res) => {
-    return res.send("Uploaded to backend");
+  .delete((req, res) => {
+    return res.send();
   });
 
 app.listen(5000);

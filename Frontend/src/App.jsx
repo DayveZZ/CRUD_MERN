@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
+import toast, { Toaster } from "react-hot-toast";
 
 const App = () => {
   const [firstName, setFirstName] = useState("");
@@ -8,6 +9,14 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    toast.success("Successfully toasted!", {
+      // icon: "👏",
+      style: {
+        borderRadius: "10px",
+        background: "#242424",
+        color: "#F0F0F0",
+      },
+    });
   };
 
   return (
@@ -42,6 +51,7 @@ const App = () => {
           <button type="submit" className="cursor-pointer hover:text-[#ea2e00]">
             Submit
           </button>
+          <Toaster />
         </form>
       </div>
 
