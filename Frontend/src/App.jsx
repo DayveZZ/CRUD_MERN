@@ -57,8 +57,9 @@ const App = () => {
           <input type="text" placeholder="First Name" required />
           <input type="text" placeholder="Last Name (optional)" />
           <input type="text" placeholder="Email" required />
+          <input type="text" placeholder="Gender" />
 
-          <select className="outline-0 cursor-pointer">
+          {/* <select className="outline-0 cursor-pointer">
             <option value="Select Gender" className="gender">
               Select Gender
             </option>
@@ -71,7 +72,7 @@ const App = () => {
             <option value="Other" className="gender">
               Other
             </option>
-          </select>
+          </select> */}
 
           <button type="submit" className="cursor-pointer hover:text-[#ea2e00]">
             Submit
