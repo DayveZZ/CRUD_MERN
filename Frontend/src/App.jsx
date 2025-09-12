@@ -5,11 +5,16 @@ import { useEffect } from "react";
 
 const App = () => {
   const [users, setUsers] = useState([]);
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
 
   useEffect(() => {
+    fetchAllUsers();
+  }, []);
+
+  function fetchAllUsers() {
     fetch("http://localhost:8000/api/users")
       .then((data) => {
         return data.json();
@@ -19,29 +24,89 @@ const App = () => {
         setUsers(data);
       })
       .catch((err) => console.error("Fetch error:", err));
-  }, []);
+  }
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   toast.success("Successfully toasted!", {
+  //     style: {
+  //       borderRadius: "10px",
+  //       background: "#242424",
+  //       color: "#F0F0F0",
+  //     },
+  //   });
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    toast.success("Successfully toasted!", {
-      // icon: "👏",
-      style: {
-        borderRadius: "10px",
-        background: "#242424",
-        color: "#F0F0F0",
-      },
-    });
+
+    try {
+      const res = await fetch("http://localhost:8000/api/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          gender,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(data.message || "Error creating user", {
+          style: {
+            borderRadius: "10px",
+            background: "#242424",
+            color: "#F0F0F0",
+          },
+        });
+        return;
+      }
+
+      toast.success("User created successfully!", {
+        style: {
+          borderRadius: "10px",
+          background: "#242424",
+          color: "#F0F0F0",
+        },
+      });
+
+      // Clear inputs
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setGender("");
+
+      // Refresh user list
+      fetchAllUsers();
+    } catch (err) {
+      console.error("Post error:", err);
+      toast.error("Failed to create user", {
+        style: {
+          borderRadius: "10px",
+          background: "#242424",
+          color: "#F0F0F0",
+        },
+      });
+    }
   };
 
-  function getDetails(id) {
-    fetch(`http://localhost:8000/api/users/${id}`)
+  function handleDelete(id) {
+    fetch(`http://localhost:8000/api/users/${id}`, {
+      method: "DELETE",
+    })
       .then((data) => {
         return data.json();
       })
       .then((data) => {
-        // setUsers(data);
         console.log(data);
-      });
+        fetchAllUsers();
+      })
+      .catch((err) => console.error("Delete error:", err));
   }
 
   return (
@@ -54,10 +119,32 @@ const App = () => {
           onSubmit={handleSubmit}
           className="input flex justify-between border-b px-4 py-2"
         >
-          <input type="text" placeholder="First Name" required />
-          <input type="text" placeholder="Last Name (optional)" />
-          <input type="text" placeholder="Email" required />
-          <input type="text" placeholder="Gender" />
+          <input
+            type="text"
+            placeholder="First Name"
+            required
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Last Name (optional)"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Gender"
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+          />
 
           {/* <select className="outline-0 cursor-pointer">
             <option value="Select Gender" className="gender">
@@ -86,21 +173,20 @@ const App = () => {
         <div className="grid grid-cols-4 gap-4">
           {users?.map((ele) => {
             return (
-              <ul className="userCard" key={ele.id}>
-                <li>UID: {ele.id}</li>
+              <ul className="userCard" key={ele._id}>
+                <li>UID: {ele._id}</li>
                 <li>
                   Name: {ele.first_name} {ele.last_name}
                 </li>
                 <li>Email: {ele.email}</li>
                 <li>Gender: {ele.gender}</li>
                 <li className="flex justify-evenly">
-                  <button>Delete</button>
                   <button
                     onClick={() => {
-                      getDetails(ele.id);
+                      handleDelete(ele._id);
                     }}
                   >
-                    getDetails
+                    Delete
                   </button>
                 </li>
               </ul>

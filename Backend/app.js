@@ -4,8 +4,10 @@ const app = new express();
 const users = require("./MOCK_DATA.json");
 const mongoose = require("mongoose");
 
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
+
 mongoose
   .connect("mongodb://127.0.0.1:27017/crudDB")
   .then(() => {
@@ -91,10 +93,10 @@ app
     return res.json({ status: "Updated Successfully !!!" });
   })
   .delete(async (req, res) => {
-    const id = res.params.id;
-    const user = userModel.findByIdAndDelete(id);
+    const id = req.params.id;
+    const user = await userModel.findByIdAndDelete(id);
     return res
-      .status(410)
+      .status(200)
       .json({ status: "Deleted", message: "User deleted successfully !!!" });
   });
 
