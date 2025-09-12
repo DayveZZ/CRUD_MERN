@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: ture,
+    unique: true,
   },
   gender: {
     type: String,
@@ -40,9 +40,14 @@ const basePath = "/api/users";
 app
   .route(basePath)
   .get(async (req, res) => {
-    return res.send(users);
+    try {
+      const allUsers = await userModel.find();
+      return res.send(allUsers);
+    } catch (err) {
+      return res.status(500).json({ status: "Error", message: err.message });
+    }
   })
-  .post((req, res) => {
+  .post(async (req, res) => {
     console.log(req.body);
 
     // Validate required fields
@@ -59,27 +64,38 @@ app
     }
 
     // Check for duplicate email
-    const existingUser = users.find((user) => user.email === req.body.email);
+    const existingUser = await userModel.findOne({ email: req.body.email });
 
     if (existingUser) {
       return res
         .status(409)
         .json({ status: "Conflict", message: "Email already exists" });
     }
+    const result = await userModel.create({
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email,
+      gender: req.body.gender,
+    });
+    res
+      .status(200)
+      .json({ status: "Success", message: "User created successfully !!!" });
   });
 
 app
   .route(`${basePath}/:id`)
   .get((req, res) => {
-    const id = req.params.id;
-    const user = users.find((user) => user.id == id);
-    return res.json(user);
+    return res.json({ message: "Success !!!" });
   })
   .patch((req, res) => {
     return res.json({ status: "Updated Successfully !!!" });
   })
-  .delete((req, res) => {
-    return res.status(410).json({ status: "Deleted Successfully !!!" });
+  .delete(async (req, res) => {
+    const id = res.params.id;
+    const user = userModel.findByIdAndDelete(id);
+    return res
+      .status(410)
+      .json({ status: "Deleted", message: "User deleted successfully !!!" });
   });
 
 app.listen(8000);
