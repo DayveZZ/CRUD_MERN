@@ -26,17 +26,6 @@ const App = () => {
       .catch((err) => console.error("Fetch error:", err));
   }
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   toast.success("Successfully toasted!", {
-  //     style: {
-  //       borderRadius: "10px",
-  //       background: "#242424",
-  //       color: "#F0F0F0",
-  //     },
-  //   });
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
