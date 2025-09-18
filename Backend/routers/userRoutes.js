@@ -8,14 +8,14 @@ const {
   deleteUserByID,
 } = require("../controller/controller");
 
-router("/").get(getAllUsers).post(createUser);
+router.route("/").get(getAllUsers).post(createUser);
 
 router
-  .route(`/:id`)
+  .route("/:id")
   .get(getUserByID)
   .patch(patchUserByID)
   .delete(deleteUserByID);
 
-router.listen(8000);
+// router.listen(8000);
 
 module.exports = router;
